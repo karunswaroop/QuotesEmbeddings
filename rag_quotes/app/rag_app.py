@@ -1,10 +1,16 @@
 import streamlit as st
 import sys
 import os
+import base64
 
 # Add the parent directory to the path so we can import modules
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from models.simple_rag import SimpleRAG
+
+def get_base64_image(image_path):
+    """Convert image to base64 string for HTML embedding"""
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
 
 # Set page config
 st.set_page_config(
@@ -31,10 +37,16 @@ with col1:
     image_path = os.path.join(os.path.dirname(__file__), "shailosophy_author.png")
     
     # Add some vertical spacing to center the image better
-    st.markdown("<div style='margin-top: 43px;'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='margin-top: 25px;'></div>", unsafe_allow_html=True)
     
     if os.path.exists(image_path):
-        st.image(image_path, use_container_width=True)
+        # Convert to relative path for HTML
+        relative_path = "shailosophy_author.png"
+        st.markdown(f"""
+        <a href="https://www.threads.com/@shailosophy" target="_blank">
+            <img src="data:image/png;base64,{get_base64_image(image_path)}" style="width: 100%; cursor: pointer;">
+        </a>
+        """, unsafe_allow_html=True)
     else:
         # Placeholder for when image is added
         st.markdown("""
@@ -46,9 +58,9 @@ with col1:
         """, unsafe_allow_html=True)
 
 with col2:
-    st.markdown("# Shailosophy<br/>Quotes Finder", unsafe_allow_html=True)
+    st.markdown("# <a href='https://www.threads.com/@shailosophy' target='_blank' style='text-decoration: none; color: inherit;'>Shailosophy</a><br/>Quotes Finder", unsafe_allow_html=True)
     st.markdown("""
-    **Semantic Search** - Find meaningful Shailosophy quotes that are actually related to your topic of interest.
+    Find meaningful Shailosophy quotes that are actually related to your topic of interest.
     Enter a topic below to discover the most relevant quotes using AI-powered semantic search.
     """)
 
