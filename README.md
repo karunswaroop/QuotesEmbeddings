@@ -1,201 +1,236 @@
-# Instagram Quote Image Downloader
+# Shailosophy Quotes Finder - RAG Powered
 
-A Python tool to download quote images from Instagram profiles, specifically designed for downloading from @shailosophy.
+An AI-powered web application that uses Retrieval-Augmented Generation (RAG) to find the most relevant Shailosophy quotes based on semantic search. Built with Streamlit, OpenAI embeddings, and modern UI/UX principles.
 
 ## Features
 
-- Download all images from an Instagram profile
-- Skip video content
-- Save metadata for each post
-- Command-line interface with options for output directory
-- Optional login for private profiles
-- Filter posts by date range
-- Count images without downloading
-- Two different approaches: Instaloader API and Selenium browser automation
+- **Semantic Search**: Find quotes that are actually related to your topic using AI embeddings
+- **Beautiful UI**: Modern Streamlit interface with custom styling and branding
+- **Real-time Results**: Get top 3 most relevant quotes with similarity scores
+- **Interactive Experience**: Example topics, session state management, and responsive design
+- **RAG Implementation**: Full semantic search using OpenAI's text-embedding-3-small model
+
+## Screenshot
+
+The application provides a clean, professional interface with:
+- Author branding and social media integration
+- Topic-based search with example suggestions
+- Formatted quote display with similarity scores
+- Responsive design and modern styling
 
 ## Installation
 
-1. Clone this repository or download the files
-2. Install the required dependencies:
+### Prerequisites
+
+- Python 3.8 or higher
+- OpenAI API key
+
+### Step 1: Clone or Download
 
 ```bash
-# For the Instaloader approach
-pip install -r requirements.txt
-
-# For the Selenium approach (recommended)
-pip install selenium webdriver-manager requests pillow
+git clone <your-repo-url>
+cd QuotesEmbeddings
 ```
+
+### Step 2: Install Dependencies
+
+```bash
+pip install -r rag_quotes/requirements.txt
+```
+
+Required packages:
+- streamlit
+- openai
+- requests
+- pandas (optional, for data manipulation)
+
+### Step 3: Set Up OpenAI API Key
+
+You have several options:
+
+**Option 1: Environment Variable (Recommended)**
+```bash
+export OPENAI_API_KEY="your-api-key-here"
+```
+
+**Option 2: Update config.py**
+```python
+# In rag_quotes/config.py
+OPENAI_API_KEY = "your-api-key-here"
+```
+
+**Note**: The current implementation has the API key in the code files. For security, consider moving it to environment variables.
+
+## Initial Setup - Generate Embeddings
+
+Before running the app for the first time, you need to generate embeddings for all quotes:
+
+```bash
+cd rag_quotes
+python -m models.simple_embeddings
+```
+
+This will:
+- Read all quotes from `data/ShailosophyQuotes.csv`
+- Generate embeddings using OpenAI's API
+- Save embeddings to `models/embeddings.json`
+- Process all 51 quotes (may take 1-2 minutes)
+
+## Running the Application
+
+### Method 1: Using the run script
+
+```bash
+cd rag_quotes
+python run.py
+```
+
+### Method 2: Direct Streamlit command
+
+```bash
+cd rag_quotes
+streamlit run app/rag_app.py
+```
+
+### Method 3: From project root
+
+```bash
+cd rag_quotes && streamlit run app/rag_app.py --server.port 8501
+```
+
+The application will be available at: `http://localhost:8501`
 
 ## Usage
 
-### Approach 1: Instaloader (May Hit Rate Limits)
+1. **Open the web app** in your browser
+2. **Enter a topic** in the search box (e.g., "business", "leadership", "relationships")
+3. **Click Search** or try the example topic buttons
+4. **View results** - Top 3 most relevant quotes with similarity scores
+5. **Explore** different topics to discover relevant quotes
 
-To download all images from @shailosophy using the Instaloader approach:
+### Example Topics
 
+Try searching for:
+- business
+- leadership
+- entrepreneurship
+- relationships
+- growth
+- wisdom
+- success
+- failure
+- trust
+- communication
+
+## Updating Quotes Data
+
+When you update the quotes in `data/ShailosophyQuotes.csv`:
+
+1. **Regenerate embeddings**:
 ```bash
-python instagram_downloader.py shailosophy
+cd rag_quotes
+python -m models.simple_embeddings
 ```
 
-With login (recommended to avoid rate limits):
+2. **Restart the app** - The new embeddings will be loaded automatically
 
-```bash
-python instagram_downloader.py shailosophy --login
+### CSV Format
+
+The CSV file should have the format:
+```csv
+id,quote
+1,"Your quote text here..."
+2,"Another quote here..."
 ```
 
-You will be prompted to enter your Instagram username and password.
+## Project Structure
 
-### Approach 2: Selenium (Recommended)
-
-The Selenium approach is more reliable as it simulates a real browser:
-
-```bash
-python selenium_instagram_downloader.py shailosophy
+```
+rag_quotes/
+├── app/
+│   ├── rag_app.py              # Main Streamlit application
+│   └── shailosophy_author.png  # Author image (optional)
+├── models/
+│   ├── simple_rag.py           # RAG system implementation
+│   ├── simple_embeddings.py    # Embeddings generation script
+│   └── embeddings.json         # Generated embeddings (auto-created)
+├── data/
+│   └── ShailosophyQuotes.csv   # Source quotes data
+├── config.py                   # Configuration settings
+├── requirements.txt            # Python dependencies
+└── run.py                      # Convenient run script
 ```
 
-With login (recommended):
+## Technical Details
 
+### RAG Implementation
+
+- **Embeddings Model**: OpenAI text-embedding-3-small
+- **Search Method**: Cosine similarity between query and quote embeddings
+- **Results**: Top 3 most similar quotes with similarity scores
+- **Caching**: Streamlit resource caching for optimal performance
+
+### Features
+
+- **Semantic Search**: Find quotes by meaning, not just keywords
+- **Session State**: Maintains search history and user inputs
+- **Error Handling**: Graceful handling of API errors and missing data
+- **Modern UI**: Custom CSS styling and responsive design
+- **Social Integration**: Links to author's social media profiles
+
+## Troubleshooting
+
+### Common Issues
+
+**1. "Embeddings not found" error**
 ```bash
-python selenium_instagram_downloader.py shailosophy --login
+# Solution: Generate embeddings first
+cd rag_quotes
+python -m models.simple_embeddings
 ```
 
-To see the browser in action (not headless):
+**2. OpenAI API errors**
+- Check your API key is correct
+- Ensure you have sufficient API credits
+- Verify network connectivity
 
+**3. Import errors**
 ```bash
-python selenium_instagram_downloader.py shailosophy --login --visible
+# Solution: Install requirements
+pip install -r rag_quotes/requirements.txt
 ```
 
-Limit the number of images to download (default is 500):
-
+**4. Port already in use**
 ```bash
-python selenium_instagram_downloader.py shailosophy --max-images 100 --download
+# Solution: Use a different port
+streamlit run app/rag_app.py --server.port 8502
 ```
 
-### Count Images Without Downloading
+## API Usage and Costs
 
-To only count images without downloading them:
-
-```bash
-# Count all images from a profile
-python selenium_instagram_downloader.py shailosophy
-
-# Count images within a date range
-python selenium_instagram_downloader.py shailosophy --start-date "2024-01-01" --end-date "2025-06-05"
-```
-
-### Filter by Date Range
-
-Download posts from a specific date range:
-
-```bash
-# Download posts from January 1, 2024 to today
-python selenium_instagram_downloader.py shailosophy --start-date "2024-01-01" --download
-
-# Download posts between specific dates
-python selenium_instagram_downloader.py shailosophy --start-date "2023-06-01" --end-date "2023-12-31" --download
-
-# Combine with login and other options
-python selenium_instagram_downloader.py shailosophy --login --start-date "2024-01-01" --end-date "2025-06-05" --visible --download
-```
-
-The script supports multiple date formats:
-- YYYY-MM-DD (2023-01-31)
-- DD-MM-YYYY (31-01-2023)
-- YYYY/MM/DD (2023/01/31)
-- DD/MM/YYYY (31/01/2023)
-- Month DD, YYYY (Jan 31, 2023)
-- DD Month YYYY (31 Jan 2023)
-
-### Specify Output Directory (Both Approaches)
-
-```bash
-python selenium_instagram_downloader.py shailosophy --output quotes_folder
-```
-
-## Handling Instagram Rate Limits
-
-Instagram has strict rate limits and anti-scraping measures. Here are some tips:
-
-1. **Always use the login option** when possible
-2. **Use the Selenium approach** for more reliable results
-3. **Be patient** - the script includes built-in delays to avoid being blocked
-4. **If blocked, wait** several hours before trying again
-5. **Consider using a VPN** if you continue to face issues
-
-## How It Works
-
-### Instaloader Approach
-
-The `instagram_downloader.py` script uses the Instaloader library to:
-- Authenticate with Instagram (if login provided)
-- Access the target profile
-- Download posts and metadata
-
-This approach is simpler but more likely to be blocked by Instagram.
-
-### Selenium Approach
-
-The `selenium_instagram_downloader.py` script:
-- Controls a real Chrome browser (headless by default)
-- Logs in like a real user (if credentials provided)
-- Scrolls through the profile page to load images
-- Extracts image URLs and downloads them
-
-This approach better mimics human behavior and is less likely to be blocked.
-
-## Notes
-
-- Instagram's website structure may change, which could affect these scripts
-- These tools are for educational purposes only
-- Please respect Instagram's terms of service and rate limits
-- Consider using Instagram's official API for business use cases
-
-## Requirements
-
-- Python 3.6 or higher
-- For Instaloader approach: instaloader library
-- For Selenium approach: selenium, webdriver-manager, requests, pillow
+- **Embeddings**: ~$0.02 per 1M tokens (one-time cost for setup)
+- **Search**: ~$0.02 per 1M tokens for query embeddings (minimal cost per search)
+- **Current Dataset**: 51 quotes ≈ minimal cost for embeddings
 
 ## License
 
 This project is open-source and available under the MIT License.
 
-### Basic Usage
+## Contributing
 
-To download all images from @shailosophy:
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
-```bash
-python instagram_downloader.py shailosophy
-```
+## Support
 
-This will create a directory named `shailosophy_quotes_YYYYMMDD` and download all images to it.
+For issues or questions:
+1. Check the troubleshooting section
+2. Review the project structure
+3. Open an issue in the repository
 
-### Specify Output Directory
+---
 
-```bash
-python instagram_downloader.py shailosophy --output quotes_folder
-```
-
-### Private Profiles
-
-If the profile is private and you need to log in:
-
-```bash
-python instagram_downloader.py shailosophy --login
-```
-
-You will be prompted to enter your Instagram username and password.
-
-## Notes
-
-- Instagram has rate limits. If you encounter errors related to too many requests, wait a while before trying again.
-- Instagram's API and website structure may change, which could affect this tool's functionality.
-- This tool is for educational purposes only. Please respect Instagram's terms of service.
-
-## Requirements
-
-- Python 3.6 or higher
-- instaloader library
-
-## License
-
-This project is open-source and available under the MIT License.
+**Built with ❤️ using Streamlit, OpenAI, and modern RAG techniques**
