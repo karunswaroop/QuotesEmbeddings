@@ -239,4 +239,8 @@ downloaded_images/
 *.jpg
 *.png
 *.jpeg
-*.gif 
+*.gif
+
+# Allow specific assets
+!assets/shailosophy_author.png
+!assets/shailosophy_author.jpg 
