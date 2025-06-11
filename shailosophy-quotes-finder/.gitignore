@@ -228,10 +228,12 @@ Temporary Items
 
 # Project specific
 *.json
-embeddings.json
 chroma_db/
 models/embeddings.json
 models/chroma_db/
+
+# Allow specific JSON files needed for deployment
+!embeddings.json
 
 # Ignore downloaded images and data
 shailosophy_quotes_*/
