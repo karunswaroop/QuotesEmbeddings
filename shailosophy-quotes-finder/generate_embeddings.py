@@ -18,11 +18,12 @@ def load_quotes():
     
     with open(QUOTES_FILE, 'r', encoding='utf-8') as file:
         csv_reader = csv.reader(file)
+        next(csv_reader)  # Skip header row
         for row in csv_reader:
-            if len(row) >= 2:  # Ensure we have at least ID and quote
+            if len(row) >= 2 and row[1].strip():  # Ensure we have at least ID and non-empty quote
                 quotes.append({
                     "id": row[0],
-                    "quote": row[1]
+                    "quote": row[1].strip()
                 })
     
     return quotes
