@@ -1,13 +1,13 @@
 """
 RAG (Retrieval-Augmented Generation) System for Shailosophy Quotes
-Handles semantic search and AI response generation for quotes.
+Handles semantic search for quotes.
 """
 
 import os
 import json
 import requests
 import math
-from config import OPENAI_API_KEY, EMBEDDING_MODEL, LLM_MODEL, EMBEDDINGS_FILE, TOP_N_RESULTS
+from config import OPENAI_API_KEY, EMBEDDING_MODEL, EMBEDDINGS_FILE, TOP_N_RESULTS
 
 class ShailosophyRAG:
     """RAG system for finding and generating responses about Shailosophy quotes"""
@@ -89,68 +89,16 @@ class ShailosophyRAG:
         similarities.sort(key=lambda x: x['similarity'], reverse=True)
         return similarities[:top_n]
     
-    def _generate_response(self, query, quotes):
-        """Generate a response using OpenAI LLM"""
-        if not quotes:
-            return f"I couldn't find any quotes related to '{query}'. Please try a different topic."
-        
-        # Create prompt
-        quotes_text = "\n\n".join([f"Quote {q['id']}: {q['quote']}" for q in quotes])
-        
-        prompt = f"""You are a helpful assistant that provides insights on Shailosophy quotes. 
-A user is looking for quotes related to "{query}".
-
-Here are the most relevant quotes I found:
-
-{quotes_text}
-
-Please provide a brief, insightful response that:
-1. Introduces these quotes as being relevant to "{query}"
-2. Briefly explains how each quote relates to the topic
-3. Presents the quotes in a clear, readable format
-
-Keep your response concise and meaningful."""
-        
-        url = "https://api.openai.com/v1/chat/completions"
-        headers = {
-            "Authorization": f"Bearer {OPENAI_API_KEY}",
-            "Content-Type": "application/json"
-        }
-        data = {
-            "model": LLM_MODEL,
-            "messages": [
-                {"role": "system", "content": "You are a helpful assistant that provides insights on quotes."},
-                {"role": "user", "content": prompt}
-            ],
-            "temperature": 0.7,
-            "max_tokens": 500
-        }
-        
-        response = requests.post(url, headers=headers, json=data)
-        if response.status_code == 200:
-            return response.json()["choices"][0]["message"]["content"]
-        else:
-            # Fallback to simple format if API fails
-            result = f"Here are the top quotes related to '{query}':\n\n"
-            for i, quote in enumerate(quotes, 1):
-                result += f"{i}. **Quote #{quote['id']}**: {quote['quote']}\n\n"
-            return result
-    
-    def search(self, topic, include_response=True):
-        """Main search function that returns quotes and optional AI response"""
+    def search(self, topic):
+        """Main search function that returns semantically similar quotes"""
         try:
             quotes = self.find_similar_quotes(topic)
             
-            result = {
+            return {
                 "success": True,
                 "quotes": quotes,
                 "topic": topic
             }
-            
-            if include_response:
-                result["response"] = self._generate_response(topic, quotes)
-            
-            return result
             
         except Exception as e:
             return {
