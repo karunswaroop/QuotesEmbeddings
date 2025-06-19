@@ -3,13 +3,10 @@ Configuration settings for Shailosophy Quotes Finder
 """
 
 import os
-from dotenv import load_dotenv
-
-# Load environment variables from .env file
-load_dotenv()
+import streamlit as st
 
 # API Settings
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "your-api-key-here")
+OPENAI_API_KEY = st.secrets.get("OPENAI_API_KEY", "your-api-key-here")
 
 # Model Settings
 EMBEDDING_MODEL = "text-embedding-3-small"
