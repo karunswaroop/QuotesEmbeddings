@@ -20,22 +20,47 @@ st.set_page_config(
     layout="centered"
 )
 
-# Hide GitHub repo link and fork button
+# Hide GitHub repo link, fork button, and other Streamlit UI elements
 st.markdown("""
 <style>
-    /* Hide Streamlit GitHub repo link and fork button */
-    .css-1jc7ptx, .css-1p1nwyz {
+    /* Hide GitHub-related elements */
+    .css-1jc7ptx, .css-1p1nwyz, .css-gl881z, .css-zt5igj {
         display: none !important;
     }
     
-    /* Hide hamburger menu */
-    #MainMenu {
-        visibility: hidden;
+    /* Hide all GitHub corner elements */
+    .github-corner {
+        display: none !important;
+    }
+    
+    /* Hide fork button and repo link */
+    [data-testid="stGitHubLink"] {
+        display: none !important;
+    }
+    
+    /* Hide Streamlit branding and menu */
+    #MainMenu, [data-testid="stToolbar"] {
+        display: none !important;
     }
     
     /* Hide footer */
     footer {
-        visibility: hidden;
+        display: none !important;
+    }
+    
+    /* Hide header decoration */
+    .decoration {
+        display: none !important;
+    }
+    
+    /* Additional selectors for GitHub elements */
+    .stGitHubLink {
+        display: none !important;
+    }
+    
+    /* Hide any elements with GitHub in their attributes */
+    [href*="github"], [src*="github"] {
+        display: none !important;
     }
 </style>
 """, unsafe_allow_html=True)
