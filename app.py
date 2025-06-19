@@ -15,7 +15,7 @@ def get_base64_image(image_path):
 
 # Set page config
 st.set_page_config(
-    page_title="Shailosophy Quotes Finder - RAG Powered",
+    page_title="sh AI lu - Shailosophy Quotes Finder",
     page_icon="📚",
     layout="centered"
 )
@@ -62,8 +62,29 @@ st.markdown("""
     [href*="github"], [src*="github"] {
         display: none !important;
     }
+
+    /* Style for the main title */
+    .main-app-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(120deg, #155799, #159957);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-family: 'Helvetica Neue', sans-serif;
+    }
+
+    /* Style for the AI part of the title */
+    .ai-text {
+        color: #159957;
+        -webkit-text-fill-color: #159957;
+    }
 </style>
 """, unsafe_allow_html=True)
+
+# Add the main title
+st.markdown('<h1 class="main-app-title">sh <span class="ai-text">AI</span> lu</h1>', unsafe_allow_html=True)
 
 # Initialize session state for topic
 if 'topic' not in st.session_state:
