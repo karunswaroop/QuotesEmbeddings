@@ -222,11 +222,26 @@ elif search_button and not current_topic.strip():
 
 # Footer
 st.markdown("---")
-st.markdown("""
-<div style='text-align: center; color: #666; font-size: 0.9em;'>
-    🚀 <strong>Full Semantic Implementation</strong> - Powered by <a href="https://www.colaberry.com/" target="_blank">Colaberry Inc</a>, using OpenAI's LLM
-</div>
-""", unsafe_allow_html=True)
+
+colaberry_icon_path = os.path.join("assets", "ColaberryIcon.webp")
+if os.path.exists(colaberry_icon_path):
+    st.markdown(f"""
+    <div style='text-align: center; color: #666; font-size: 0.9em;'>
+        🚀 <strong>Full Semantic Search Implementation</strong> - Powered by 
+        <a href="https://www.colaberry.com/" target="_blank" style="text-decoration: none;">
+            <img src="data:image/webp;base64,{get_base64_image(colaberry_icon_path)}" 
+                 style="height: 20px; vertical-align: middle; margin: 0 5px;" 
+                 alt="Colaberry Inc">
+        </a>
+    </div>
+    """, unsafe_allow_html=True)
+else:
+    st.markdown("""
+    <div style='text-align: center; color: #666; font-size: 0.9em;'>
+        🚀 <strong>Full Semantic Implementation</strong> - Powered by 
+        <a href="https://www.colaberry.com/" target="_blank">Colaberry Inc</a>
+    </div>
+    """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     pass 

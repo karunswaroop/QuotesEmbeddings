@@ -228,7 +228,7 @@ Temporary Items
 
 # Project specific
 *.json
-embeddings.json
+!embeddings.json
 chroma_db/
 models/embeddings.json
 models/chroma_db/
@@ -243,4 +243,5 @@ downloaded_images/
 
 # Allow specific assets
 !assets/shailosophy_author.png
-!assets/shailosophy_author.jpg 
+!assets/shailosophy_author.jpg
+!assets/ColaberryIcon.webp 
