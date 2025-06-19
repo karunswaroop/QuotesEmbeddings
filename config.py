@@ -4,9 +4,16 @@ Configuration settings for Shailosophy Quotes Finder
 
 import os
 import streamlit as st
+from dotenv import load_dotenv
 
-# API Settings
-OPENAI_API_KEY = st.secrets.get("OPENAI_API_KEY", "your-api-key-here")
+# Load environment variables from .env file for local development
+load_dotenv()
+
+# API Settings - try Streamlit secrets first, then .env file
+try:
+    OPENAI_API_KEY = st.secrets.get("OPENAI_API_KEY")
+except:
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "your-api-key-here")
 
 # Model Settings
 EMBEDDING_MODEL = "text-embedding-3-small"
