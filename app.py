@@ -65,14 +65,14 @@ st.markdown("""
 
     /* Style for the main title */
     .main-app-title {
-        font-size: 3.5rem;
+        font-size: 2.5rem;
         font-weight: 700;
-        text-align: center;
         margin-bottom: 0.5rem;
         background: linear-gradient(120deg, #155799, #159957);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         font-family: 'Helvetica Neue', sans-serif;
+        line-height: 1.2;
     }
 
     /* Style for the AI part of the title */
@@ -80,73 +80,60 @@ st.markdown("""
         color: #159957;
         -webkit-text-fill-color: #159957;
     }
-</style>
-""", unsafe_allow_html=True)
 
-# Add the main title
-st.markdown('<h1 class="main-app-title">sh <span class="ai-text">AI</span> lu</h1>', unsafe_allow_html=True)
-
-# Initialize session state for topic
-if 'topic' not in st.session_state:
-    st.session_state.topic = "Business"
-
-# Initialize the RAG system
-@st.cache_resource
-def get_rag_system():
-    return ShailosophyRAG()
-
-# App header with author image - improved layout
-st.markdown("""
-<style>
-.header-container {
-    display: flex;
-    align-items: center;
-    padding: 20px 0;
-    gap: 30px;
-}
-.image-container {
-    flex: 1;
-    max-width: 200px;
-}
-.text-container {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-.author-image {
-    width: 100%;
-    max-width: 180px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-.author-image:hover {
-    transform: scale(1.02);
-}
-.main-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-    line-height: 1.2;
-}
-.main-description {
-    font-size: 1.1rem;
-    color: #666;
-    line-height: 1.5;
-    margin-bottom: 0;
-}
-@media (max-width: 768px) {
+    /* Header container styles */
     .header-container {
+        display: flex;
+        align-items: center;
+        padding: 20px 0;
+        gap: 30px;
+    }
+    .image-container {
+        flex: 1;
+        max-width: 200px;
+    }
+    .text-container {
+        flex: 2;
+        display: flex;
         flex-direction: column;
-        text-align: center;
-        gap: 20px;
+        justify-content: center;
     }
-    .main-title {
+    .author-image {
+        width: 100%;
+        max-width: 180px;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+    .author-image:hover {
+        transform: scale(1.02);
+    }
+    .app-title {
         font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+        line-height: 1.2;
     }
-}
+    .main-description {
+        font-size: 1.1rem;
+        color: #666;
+        line-height: 1.5;
+        margin-bottom: 0;
+    }
+    @media (max-width: 768px) {
+        .header-container {
+            flex-direction: column;
+            text-align: center;
+            gap: 20px;
+        }
+        .app-title {
+            font-size: 1.8rem;
+        }
+        .main-app-title {
+            font-size: 2rem;
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -164,7 +151,8 @@ if os.path.exists(image_path):
             </a>
         </div>
         <div class="text-container">
-            <div class="main-title">
+            <h1 class="main-app-title">sh <span class="ai-text">AI</span> lu</h1>
+            <div class="app-title">
                 <a href="https://www.threads.com/@shailosophy" target="_blank" 
                    style="text-decoration: none; color: inherit;">
                     Shailosophy Quotes Finder
@@ -189,12 +177,25 @@ else:
         </div>
         """, unsafe_allow_html=True)
     with col2:
+        st.markdown('<h1 class="main-app-title">sh <span class="ai-text">AI</span> lu</h1>', unsafe_allow_html=True)
         st.markdown("# Shailosophy Quotes Finder")
         st.markdown("""
         Find meaningful Shailosophy quotes that are actually related to your topic of interest.
         Enter a topic below to discover the most relevant quotes using AI-powered semantic search.
         """)
 
+st.markdown("---")
+
+# Initialize session state for topic
+if 'topic' not in st.session_state:
+    st.session_state.topic = "Business"
+
+# Initialize the RAG system
+@st.cache_resource
+def get_rag_system():
+    return ShailosophyRAG()
+
+# App header with author image - improved layout
 st.markdown("---")
 
 # Initialize RAG
