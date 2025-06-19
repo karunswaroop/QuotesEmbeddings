@@ -29,10 +29,10 @@ source env/bin/activate  # On Windows: env\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. Create a `.env` file in the root directory and add your OpenAI API key:
-```
-OPENAI_API_KEY=your-api-key-here
-```
+4. Set up your environment variables:
+   - Copy the template file: `cp env_template.txt .env`
+   - Edit `.env` and replace `your-openai-api-key-here` with your actual OpenAI API key
+   - Get your API key from [OpenAI Platform](https://platform.openai.com/api-keys)
 
 5. Run the Streamlit app:
 ```bash
@@ -75,7 +75,8 @@ shailosophy-quotes-finder/
 │   └── test_api.py        # API connection tests
 ├── embeddings.json        # Generated embeddings file
 ├── requirements.txt       # Python dependencies
-├── .env                   # Environment variables (API key)
+├── env_template.txt       # Environment variables template
+├── .env                   # Environment variables (API key) - not in git
 ├── .gitignore            # Git ignore rules
 └── README.md             # This file
 ```
