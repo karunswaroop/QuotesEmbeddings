@@ -206,6 +206,36 @@ st.markdown("""
             color: #E8EAED;
         }
     }
+
+    /* Success message and search section spacing */
+    [data-testid="stImage"], 
+    [data-testid="stMarkdown"] > div:has(div.stMarkdown) {
+        margin-top: 2rem;
+    }
+
+    /* Style success message */
+    .element-container:has(.stSuccess) {
+        margin: 2rem 0 1rem;
+    }
+    .stSuccess {
+        background-color: rgba(25, 135, 84, 0.1);
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        border: 1px solid rgba(25, 135, 84, 0.2);
+    }
+    .stSuccess > div > div {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    /* Search section styling */
+    h3 {
+        margin: 2rem 0 1rem !important;
+        font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+        font-weight: 600 !important;
+        color: #E8EAED !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -266,8 +296,6 @@ else:
         Enter a topic below to discover the most relevant quotes using AI-powered semantic search.
         """)
 
-st.markdown("---")
-
 # Initialize session state for topic
 if 'topic' not in st.session_state:
     st.session_state.topic = "Business"
@@ -276,9 +304,6 @@ if 'topic' not in st.session_state:
 @st.cache_resource
 def get_rag_system():
     return ShailosophyRAG()
-
-# App header with author image - improved layout
-st.markdown("---")
 
 # Initialize RAG
 try:
