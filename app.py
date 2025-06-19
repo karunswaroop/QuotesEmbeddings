@@ -20,6 +20,26 @@ st.set_page_config(
     layout="centered"
 )
 
+# Hide GitHub repo link and fork button
+st.markdown("""
+<style>
+    /* Hide Streamlit GitHub repo link and fork button */
+    .css-1jc7ptx, .css-1p1nwyz {
+        display: none !important;
+    }
+    
+    /* Hide hamburger menu */
+    #MainMenu {
+        visibility: hidden;
+    }
+    
+    /* Hide footer */
+    footer {
+        visibility: hidden;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # Initialize session state for topic
 if 'topic' not in st.session_state:
     st.session_state.topic = "Business"
