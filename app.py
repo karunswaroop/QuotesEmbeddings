@@ -65,82 +65,145 @@ st.markdown("""
 
     /* Style for the main title */
     .main-app-title {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-        background: linear-gradient(120deg, #155799, #159957);
+        font-size: 3.2rem;
+        font-weight: 800;
+        margin-bottom: 0.3rem;
+        font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        letter-spacing: -0.02em;
+    }
+    
+    .main-app-title .sh-text {
+        background: linear-gradient(135deg, #0396FF, #0D47A1);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        font-family: 'Helvetica Neue', sans-serif;
-        line-height: 1.2;
+        background-clip: text;
     }
 
     /* Style for the AI part of the title */
-    .ai-text {
-        color: #159957;
-        -webkit-text-fill-color: #159957;
+    .main-app-title .ai-text {
+        background: linear-gradient(135deg, #32CD32, #2E8B57);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 900;
+    }
+    
+    .main-app-title .lu-text {
+        background: linear-gradient(135deg, #0396FF, #0D47A1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 
     /* Header container styles */
     .header-container {
         display: flex;
         align-items: center;
-        padding: 20px 0;
-        gap: 30px;
+        padding: 2rem 0 1.5rem;
+        gap: 3rem;
+        max-width: 1200px;
+        margin: 0 auto;
     }
+    
     .image-container {
         flex: 1;
-        max-width: 200px;
+        max-width: 220px;
+        transition: transform 0.3s ease;
     }
+    
+    .image-container:hover {
+        transform: translateY(-5px);
+    }
+    
     .text-container {
         flex: 2;
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
+    
     .author-image {
         width: 100%;
-        max-width: 180px;
-        border-radius: 15px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        cursor: pointer;
-        transition: transform 0.2s ease;
+        max-width: 200px;
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
     }
+    
     .author-image:hover {
         transform: scale(1.02);
+        box-shadow: 0 12px 25px rgba(0,0,0,0.2);
     }
+    
     .app-title {
-        font-size: 2rem;
-        font-weight: bold;
-        margin-bottom: 10px;
+        font-size: 2.4rem;
+        font-weight: 700;
+        margin: 0.7rem 0 1rem;
         line-height: 1.1;
+        font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+        letter-spacing: -0.01em;
+        color: #E8EAED;
     }
+    
     .app-title a {
         display: inline-block;
+        text-decoration: none;
+        color: inherit;
+        transition: opacity 0.2s ease;
     }
+    
+    .app-title a:hover {
+        opacity: 0.9;
+    }
+    
     .app-title br {
         display: block;
         content: "";
-        margin-top: -0.3em;
+        margin-top: -0.2em;
     }
+    
     .main-description {
-        font-size: 1.1rem;
-        color: #666;
-        line-height: 1.5;
-        margin-bottom: 0;
-        margin-top: 0.5rem;
+        font-size: 1.15rem;
+        color: #9AA0A6;
+        line-height: 1.6;
+        margin: 0.8rem 0 0;
+        font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+        max-width: 90%;
     }
+    
     @media (max-width: 768px) {
         .header-container {
             flex-direction: column;
             text-align: center;
-            gap: 20px;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+        }
+        
+        .image-container {
+            max-width: 180px;
+        }
+        
+        .main-app-title {
+            font-size: 2.8rem;
+        }
+        
+        .app-title {
+            font-size: 2rem;
+        }
+        
+        .main-description {
+            font-size: 1.1rem;
+            margin: 0.6rem auto 0;
+        }
+    }
+    
+    /* Dark theme optimizations */
+    @media (prefers-color-scheme: dark) {
+        .main-description {
+            color: #9AA0A6;
         }
         .app-title {
-            font-size: 1.8rem;
-        }
-        .main-app-title {
-            font-size: 2rem;
+            color: #E8EAED;
         }
     }
 </style>
@@ -160,10 +223,13 @@ if os.path.exists(image_path):
             </a>
         </div>
         <div class="text-container">
-            <h1 class="main-app-title">sh <span class="ai-text">AI</span> lu</h1>
+            <h1 class="main-app-title">
+                <span class="sh-text">sh</span> 
+                <span class="ai-text">AI</span> 
+                <span class="lu-text">lu</span>
+            </h1>
             <div class="app-title">
-                <a href="https://www.threads.com/@shailosophy" target="_blank" 
-                   style="text-decoration: none; color: inherit;">
+                <a href="https://www.threads.com/@shailosophy" target="_blank">
                     Shailosophy<br/>
                     Quotes Finder
                 </a>
@@ -187,7 +253,13 @@ else:
         </div>
         """, unsafe_allow_html=True)
     with col2:
-        st.markdown('<h1 class="main-app-title">sh <span class="ai-text">AI</span> lu</h1>', unsafe_allow_html=True)
+        st.markdown("""
+        <h1 class="main-app-title">
+            <span class="sh-text">sh</span> 
+            <span class="ai-text">AI</span> 
+            <span class="lu-text">lu</span>
+        </h1>
+        """, unsafe_allow_html=True)
         st.markdown("# Shailosophy\nQuotes Finder")
         st.markdown("""
         Find meaningful Shailosophy quotes that are actually related to your topic of interest.
