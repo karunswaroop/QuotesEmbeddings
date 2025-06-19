@@ -113,13 +113,22 @@ st.markdown("""
         font-size: 2rem;
         font-weight: bold;
         margin-bottom: 10px;
-        line-height: 1.2;
+        line-height: 1.1;
+    }
+    .app-title a {
+        display: inline-block;
+    }
+    .app-title br {
+        display: block;
+        content: "";
+        margin-top: -0.3em;
     }
     .main-description {
         font-size: 1.1rem;
         color: #666;
         line-height: 1.5;
         margin-bottom: 0;
+        margin-top: 0.5rem;
     }
     @media (max-width: 768px) {
         .header-container {
@@ -155,7 +164,8 @@ if os.path.exists(image_path):
             <div class="app-title">
                 <a href="https://www.threads.com/@shailosophy" target="_blank" 
                    style="text-decoration: none; color: inherit;">
-                    Shailosophy Quotes Finder
+                    Shailosophy<br/>
+                    Quotes Finder
                 </a>
             </div>
             <div class="main-description">
@@ -178,7 +188,7 @@ else:
         """, unsafe_allow_html=True)
     with col2:
         st.markdown('<h1 class="main-app-title">sh <span class="ai-text">AI</span> lu</h1>', unsafe_allow_html=True)
-        st.markdown("# Shailosophy Quotes Finder")
+        st.markdown("# Shailosophy\nQuotes Finder")
         st.markdown("""
         Find meaningful Shailosophy quotes that are actually related to your topic of interest.
         Enter a topic below to discover the most relevant quotes using AI-powered semantic search.
