@@ -12,6 +12,37 @@ A Streamlit application that uses AI-powered semantic search to find relevant Sh
 
 ## Local Development Setup
 
+### Option 1: Using uv (Recommended - Faster)
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd <repository-name>
+```
+
+2. Create and activate a uv environment:
+```bash
+uv venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+```
+
+3. Install dependencies with uv:
+```bash
+uv pip install -r requirements.txt
+```
+
+4. Set up your environment variables:
+   - Copy the template file: `cp env_template.txt .env`
+   - Edit `.env` and replace `your-openai-api-key-here` with your actual OpenAI API key
+   - Get your API key from [OpenAI Platform](https://platform.openai.com/api-keys)
+
+5. Run the Streamlit app:
+```bash
+streamlit run app.py
+```
+
+### Option 2: Using traditional virtual environment
+
 1. Clone the repository:
 ```bash
 git clone <repository-url>
@@ -37,6 +68,21 @@ pip install -r requirements.txt
 5. Run the Streamlit app:
 ```bash
 streamlit run app.py
+```
+
+### Installing uv
+
+If you don't have uv installed, you can install it with:
+
+```bash
+# On macOS and Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# On Windows
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# Or with pip
+pip install uv
 ```
 
 ## Deployment on Streamlit Cloud
